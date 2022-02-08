@@ -72,7 +72,7 @@ def get_link(ad):
 
 def get_price(ad):
     price = int(ad.find('span', attrs={'class': 'price'})['content'])
-    return price if price else None
+    return price or None
 
 
 def get_date(ad):
@@ -107,7 +107,7 @@ def replace_month_name_with_number(date):
               'декабря': '12'}
     date_splitted = date.split()
     date_splitted[1] = months[date_splitted[1]]
-    return ' '.join(d for d in date_splitted)
+    return ' '.join(date_splitted)
 
 
 def replace_relative_day_with_absolute(date, relative_day, absolute_day):
