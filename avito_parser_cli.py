@@ -17,7 +17,7 @@ def to_date(string):
 def print_ad_info(ad, number):
     print('{}. {}'.format(number, ad['Title']))
     print('Ссылка:', ad['Link'])
-    print('Цена:', ad['Price'] if ad['Price'] else 'Не указана')
+    print('Цена:', ad['Price'] or 'Не указана')
     print('Дата:', ad['Date'])
 
 
@@ -64,11 +64,19 @@ if __name__ == '__main__':
         writer.writeheader()
         for ad in get_all_ads(args.query, sort_by=args.sortby, by_title=args.bytitle,
                             with_images=args.withimages, owner=args.owner):
-            if (args.minprice and not ad['Price']) or (args.minprice and \
-                ad['Price'] and ad['Price'] < args.minprice):
+            if (
+                args.minprice
+                and not ad['Price']
+                or args.minprice
+                and ad['Price'] < args.minprice
+            ):
                 continue
-            if (args.maxprice and not ad['Price']) or (args.maxprice and \
-                ad['Price'] and ad['Price'] > args.maxprice):
+            if (
+                args.maxprice
+                and not ad['Price']
+                or args.maxprice
+                and ad['Price'] > args.maxprice
+            ):
                 continue
             if args.startdate and to_date(ad['Date']) < args.startdate:
                 continue
